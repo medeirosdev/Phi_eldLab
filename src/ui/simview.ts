@@ -77,7 +77,11 @@ export class SimView {
       sim.loadPreset(id);
       this.loop.resetAccumulator();
     });
-    this.root.querySelector('.panel')!.append(this.panel.el);
+    const credit = document.createElement('div');
+    credit.className = 'panel-credit';
+    credit.innerHTML =
+      'Criado por <a href="https://www.linkedin.com/in/guilhermedemedeiros/" target="_blank" rel="noopener">Guilherme de Medeiros Ellena</a><br />UNICAMP · Matemática Aplicada e Computacional';
+    this.root.querySelector('.panel')!.append(this.panel.el, credit);
 
     const ctx: SimContext = {
       stage: this.stage,

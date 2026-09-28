@@ -68,3 +68,8 @@ Sem dependências em produção: TypeScript + Vite, Canvas 2D e WebGL2.
 Cada push na `main` publica o site no GitHub Pages pelo workflow [.github/workflows/deploy.yml](.github/workflows/deploy.yml) (é preciso ativar **Settings → Pages → Source: GitHub Actions** uma vez).
 
 Veja o [PLANO.md](PLANO.md) para a visão completa e o roteiro.
+
+## Autor
+
+**Guilherme de Medeiros Ellena** · UNICAMP, Matemática Aplicada e Computacional
+[LinkedIn](https://www.linkedin.com/in/guilhermedemedeiros/)

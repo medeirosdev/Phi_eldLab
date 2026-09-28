@@ -491,10 +491,48 @@ a.card:hover .go {
 }
 
 .foot {
-  margin-top: 64px;
+  margin-top: 72px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
   color: var(--text-faint);
   font-size: 13px;
   text-align: center;
+}
+
+.credit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+
+.credit-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.credit-name {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  transition: color 0.2s;
+}
+
+.credit-name span {
+  font-size: 0.75em;
+  color: var(--text-dim);
+}
+
+.credit-name:hover {
+  color: var(--acc-elet);
+}
+
+.credit-org {
+  color: var(--text-dim);
 }
 
 @keyframes rise {
@@ -801,6 +839,23 @@ a.card:hover .go {
   overscroll-behavior: contain;
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+}
+
+.panel-credit {
+  padding: 18px 18px 28px;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--text-faint);
+}
+
+.panel-credit a {
+  color: var(--text-dim);
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.panel-credit a:hover {
+  color: var(--accent);
 }
 
 .sec {

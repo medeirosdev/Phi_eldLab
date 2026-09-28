@@ -30,7 +30,16 @@ export function renderHome(host: HTMLElement): { destroy(): void } {
         </dl>
       </section>
       <section class="cards" aria-label="Simulações"></section>
-      <footer class="foot"><span class="brand-phi">Φ</span>ield Lab · física para a sala de aula</footer>
+      <footer class="foot">
+        <div class="credit">
+          <span class="credit-label">Criado por</span>
+          <a class="credit-name" href="https://www.linkedin.com/in/guilhermedemedeiros/" target="_blank" rel="noopener">
+            Guilherme de Medeiros Ellena <span aria-hidden="true">↗</span>
+          </a>
+          <span class="credit-org">UNICAMP · Matemática Aplicada e Computacional</span>
+        </div>
+        <p><span class="brand-phi">Φ</span>ield Lab · física para a sala de aula</p>
+      </footer>
     </div>`;
 
   const cards = host.querySelector('.cards')!;
