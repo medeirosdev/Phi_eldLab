@@ -1,5 +1,6 @@
 import './ui/theme.css';
 import { registry } from './registry';
+import { setupAbout } from './ui/about';
 import { renderHome } from './ui/home';
 import { SimView } from './ui/simview';
 
@@ -7,6 +8,8 @@ const view = document.getElementById('view')!;
 const nav = document.getElementById('nav')!;
 let current: { destroy(): void } | null = null;
 let routeToken = 0;
+
+setupAbout(document.getElementById('author-btn')!);
 
 nav.innerHTML = registry
   .map((e) =>
