@@ -25,8 +25,9 @@ export function setupAbout(button: HTMLElement) {
       <span>UNICAMP</span>
     </p>
     <p class="about-text">
-      O Φield Lab reúne simulações de física feitas do zero: integradores numéricos, equações de onda na GPU
-      e eletrostática relativística — tudo rodando no navegador, sem dependências.
+      O Φield Lab reúne simulações de física feitas do zero, com a física em CPU e GPU: integradores numéricos
+      na CPU, equações de onda e mapas de campo na GPU e eletrostática relativística — tudo rodando no navegador,
+      sem dependências.
     </p>
     <div class="about-links">
       <a class="btn primary" href="${LINKEDIN}" target="_blank" rel="noopener">${linkedinIcon}LinkedIn</a>
