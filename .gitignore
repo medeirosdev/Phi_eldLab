@@ -2,3 +2,6 @@ node_modules
 dist
 *.local
 .DS_Store
+
+# área de testes local
+Case/
