@@ -85,6 +85,7 @@ export class SimView {
       refreshUI: () => {
         this.panel.refresh();
         this.syncTransport();
+        this.syncTools();
       },
       resetCharts: () => this.panel.clearCharts(),
       toast: (m) => this.toast(m),
@@ -93,10 +94,37 @@ export class SimView {
     sim.init(ctx);
     this.detachInput = attachInput(this.stage.canvas, this.camera, (p) => sim.onPointer?.(p));
 
+    this.buildToolbar(stageHost);
     this.wireTransport(entry.id);
     window.addEventListener('keydown', this.onKey);
     this.syncTransport();
     this.loop.start();
+  }
+
+  private buildToolbar(host: HTMLElement) {
+    const tools = this.sim.tools;
+    if (!tools?.length) return;
+    const bar = document.createElement('div');
+    bar.className = 'toolbar glass';
+    bar.setAttribute('role', 'toolbar');
+    bar.innerHTML = tools
+      .map((t, i) => `<button class="tool" data-tool="${t.id}" data-label="${t.label}" aria-label="${t.label}" title="${t.label} (${i + 1})">${t.icon}</button>`)
+      .join('');
+    host.append(bar);
+    this.syncTools();
+  }
+
+  private selectTool(id: string) {
+    this.sim.onTool?.(id);
+    this.syncTools();
+    const hint = this.sim.tools?.find((t) => t.id === id)?.hint;
+    if (hint) this.toast(hint);
+  }
+
+  private syncTools() {
+    this.root.querySelectorAll<HTMLElement>('[data-tool]').forEach((b) => {
+      b.classList.toggle('on', b.dataset.tool === this.sim.tool);
+    });
   }
 
   private wireTransport(id: string) {
@@ -105,8 +133,12 @@ export class SimView {
     if (!storage(hintKey)) hint.hidden = false;
 
     this.root.addEventListener('click', (e) => {
-      const t = (e.target as HTMLElement).closest<HTMLElement>('[data-act],[data-speed]');
+      const t = (e.target as HTMLElement).closest<HTMLElement>('[data-act],[data-speed],[data-tool]');
       if (!t) return;
+      if (t.dataset.tool) {
+        this.selectTool(t.dataset.tool);
+        return;
+      }
       if (t.dataset.speed) {
         this.loop.speed = Number(t.dataset.speed);
         this.syncTransport();
@@ -170,6 +202,8 @@ export class SimView {
       this.loop.running = false;
       this.loop.step();
       this.syncTransport();
+    } else if (/^[1-9]$/.test(e.key) && this.sim.tools?.[Number(e.key) - 1]) {
+      this.selectTool(this.sim.tools[Number(e.key) - 1].id);
     } else if (e.key === 'r' || e.key === 'R') {
       this.sim.loadPreset(this.sim.currentPreset);
     } else if (this.sim.onKey?.(e)) {

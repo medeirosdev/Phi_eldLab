@@ -518,6 +518,7 @@ a.card:hover .go {
 }
 
 .stage-bg,
+.stage-gl,
 .stage-main {
   position: absolute;
   inset: 0;
@@ -728,6 +729,68 @@ a.card:hover .go {
   font-size: 13px;
   font-weight: 500;
   z-index: 3;
+}
+
+.toolbar {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+  border-radius: 16px;
+  z-index: 3;
+}
+
+.tool {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  border: 0;
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.tool:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.tool.on {
+  color: var(--text);
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent),
+    0 0 18px -6px color-mix(in srgb, var(--accent) 80%, transparent);
+}
+
+.tool::after {
+  content: attr(data-label);
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 50%;
+  transform: translate(-4px, -50%);
+  padding: 5px 10px;
+  border-radius: 8px;
+  background: rgba(10, 13, 21, 0.92);
+  border: 1px solid var(--line);
+  color: var(--text);
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s, transform 0.2s var(--ease);
+}
+
+.tool:hover::after {
+  opacity: 1;
+  transform: translate(0, -50%);
 }
 
 /* ─────────────────────────── Painel ─────────────────────────── */
@@ -1033,6 +1096,22 @@ input[type='range']:active::-webkit-slider-thumb {
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent);
 }
 
+.ctl-action button {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 11px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.ctl-action button:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--line-2);
+}
+
 select {
   width: 100%;
   -webkit-appearance: none;
@@ -1128,6 +1207,34 @@ option {
   }
 
   .hint {
+    display: none;
+  }
+
+  .toolbar {
+    top: 12px;
+    left: 12px;
+    transform: none;
+    flex-direction: row;
+    border-radius: 14px;
+    padding: 4px;
+  }
+
+  .panel-btn {
+    top: 12px;
+    right: 12px;
+    padding: 9px;
+  }
+
+  .panel-btn span {
+    display: none;
+  }
+
+  .tool {
+    width: 36px;
+    height: 36px;
+  }
+
+  .tool::after {
     display: none;
   }
 }

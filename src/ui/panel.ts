@@ -1,4 +1,4 @@
-import type { ParamDef, RangeParam, ReadoutDef, SelectParam, Simulation, ToggleParam } from '../core/types';
+import type { ActionParam, ParamDef, RangeParam, ReadoutDef, SelectParam, Simulation, ToggleParam } from '../core/types';
 import { Chart } from './chart';
 import { el } from './dom';
 
@@ -99,6 +99,7 @@ export class Panel {
     let node: HTMLElement;
     if (def.type === 'range') node = this.range(def);
     else if (def.type === 'toggle') node = this.toggle(def);
+    else if (def.type === 'action') node = this.action(def);
     else node = this.select(def);
     if (def.hint) node.title = def.hint;
     return node;
@@ -144,10 +145,19 @@ export class Panel {
     return wrap;
   }
 
+  private action(def: ActionParam) {
+    const wrap = el('div', 'ctl ctl-action');
+    const b = el('button', undefined, def.label);
+    b.type = 'button';
+    b.addEventListener('click', () => this.sim.onParam(def.key, true));
+    wrap.append(b);
+    return wrap;
+  }
+
   private select(def: SelectParam) {
     const wrap = el('div', 'ctl ctl-select');
     wrap.append(el('div', 'ctl-head', def.label));
-    const short = def.options.length <= 3 && def.options.reduce((n, o) => n + o.label.length, 0) <= 34;
+    const short = def.options.length <= 4 && def.options.reduce((n, o) => n + o.label.length, 0) <= 34;
     if (short) {
       const seg = el('div', 'seg');
       const btns = def.options.map((o) => {

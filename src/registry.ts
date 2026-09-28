@@ -20,8 +20,9 @@ export const registry: SimEntry[] = [
     title: 'Campo Elétrico',
     subtitle: 'Linhas de campo, superfícies equipotenciais e a lei de Coulomb com superposição.',
     accent: '#5ab0ff',
-    tags: ['Eletrostática', 'Coulomb', 'Gauss'],
-    status: 'soon',
+    tags: ['Eletrostática', 'Coulomb', 'Rutherford'],
+    status: 'ready',
+    load: () => import('./sims/campo-eletrico'),
   },
   {
     id: 'ondas',
@@ -29,6 +30,7 @@ export const registry: SimEntry[] = [
     subtitle: 'Interferência, difração e refração resolvendo a equação de onda na GPU.',
     accent: '#3ee6c4',
     tags: ['Ondulatória', 'Young', 'Huygens'],
-    status: 'soon',
+    status: 'ready',
+    load: () => import('./sims/ondas'),
   },
 ];

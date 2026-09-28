@@ -31,7 +31,22 @@ export interface SelectParam extends ParamBase {
   options: { value: string; label: string }[];
 }
 
-export type ParamDef = RangeParam | ToggleParam | SelectParam;
+/** Botão de ação (ex.: "Limpar"): chama onParam(key, true). */
+export interface ActionParam extends ParamBase {
+  type: 'action';
+  value?: undefined;
+}
+
+export type ParamDef = RangeParam | ToggleParam | SelectParam | ActionParam;
+
+/** Ferramenta da barra lateral do palco (o que o clique faz). */
+export interface ToolDef {
+  id: string;
+  label: string;
+  /** SVG inline. */
+  icon: string;
+  hint?: string;
+}
 
 export interface ReadoutDef {
   key: string;
@@ -101,8 +116,11 @@ export interface Simulation {
   /** Dica de interação (aceita HTML simples). */
   readonly hint: string;
   currentPreset: string;
+  readonly tools?: ToolDef[];
+  tool?: string;
 
   init(ctx: SimContext): void;
+  onTool?(id: string): void;
   loadPreset(id: string): void;
   onParam(key: string, value: ParamValue): void;
   step(dt: number): void;

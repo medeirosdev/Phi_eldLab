@@ -261,8 +261,8 @@ No celular, o painel lateral vira uma gaveta inferior deslizante.
 - [x] Presets (incluindo a figura-8)
 
 ### Fase 2: Ondas e Campo Elétrico
-- [ ] Ondas: solver na GPU, bordas absorventes, paredes desenháveis, iluminação
-- [ ] Elétrico: linhas de campo RK4, mapa de potencial no shader, partículas de teste
+- [x] Ondas: solver na GPU, bordas absorventes, paredes desenháveis, iluminação
+- [x] Elétrico: linhas de campo RK4, mapa de potencial no shader, partículas de teste
 
 ### Fase 3: Polimento e escala
 - [x] Tela inicial com miniaturas ao vivo

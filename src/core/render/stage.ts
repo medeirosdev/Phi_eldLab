@@ -12,6 +12,9 @@ export class Stage {
   h = 1;
   dpr = 1;
   drawBackground: ((ctx: CanvasRenderingContext2D, w: number, h: number) => void) | null = null;
+  /** Camada WebGL2 opcional, entre o fundo e a camada 2D (criada sob demanda). */
+  gl: WebGL2RenderingContext | null = null;
+  glCanvas: HTMLCanvasElement | null = null;
 
   private listeners: Array<() => void> = [];
   private ro: ResizeObserver;
@@ -37,7 +40,8 @@ export class Stage {
     this.w = Math.max(1, r.width);
     this.h = Math.max(1, r.height);
     this.dpr = Math.min(window.devicePixelRatio || 1, 2);
-    for (const c of [this.bg, this.canvas]) {
+    for (const c of [this.bg, this.canvas, this.glCanvas]) {
+      if (!c) continue;
       c.width = Math.round(this.w * this.dpr);
       c.height = Math.round(this.h * this.dpr);
     }
@@ -52,6 +56,20 @@ export class Stage {
     this.drawBackground?.(b, this.w, this.h);
   }
 
+  /** Cria (uma vez) a camada WebGL2. Retorna null se o navegador não suportar. */
+  enableGL(): WebGL2RenderingContext | null {
+    if (this.gl) return this.gl;
+    const c = document.createElement('canvas');
+    c.className = 'stage-gl';
+    const gl = c.getContext('webgl2', { antialias: false, alpha: true, premultipliedAlpha: false });
+    if (!gl) return null;
+    this.bg.after(c);
+    this.glCanvas = c;
+    this.gl = gl;
+    this.resize();
+    return gl;
+  }
+
   /** Prepara a camada principal para um novo quadro. */
   begin() {
     const g = this.ctx;
@@ -63,6 +81,8 @@ export class Stage {
 
   destroy() {
     this.ro.disconnect();
+    this.gl?.getExtension('WEBGL_lose_context')?.loseContext();
+    this.glCanvas?.remove();
     this.bg.remove();
     this.canvas.remove();
   }
